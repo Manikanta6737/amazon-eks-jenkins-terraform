@@ -3,9 +3,8 @@ pipeline {
     environment {
         AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id')
         AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
-	VERSION = "$(BUILD_NUMBER)"
 	PROJECT = 'test-repository'
-	IMAGE = "$PROJECT:$VERSION"
+	IMAGE = '$PROJECT'
 	ECRURL = "https://070999721344.dkr.ecr.us-east-1.amazonaws.com/test-repository"
 	ECRCRED = "ecr:us-east-1:awskey"
     }
