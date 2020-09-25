@@ -11,6 +11,7 @@ pipeline {
             steps {
                 sh 'docker build -t test .'
 		sh 'docker tag test:latest 070999721344.dkr.ecr.us-east-1.amazonaws.com/test-repository:latest'
+		sh 'docker.with registry(ECRURL, ECRCRED)'
 		sh 'docker push 070999721344.dkr.ecr.us-east-1.amazonaws.com/test-repository:latest'
          }
       }
