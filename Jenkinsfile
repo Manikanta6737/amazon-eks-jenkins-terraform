@@ -4,7 +4,8 @@ pipeline {
 	stage('login_ecr') {
     	    steps {
        		script {
-		 withDockerRegistry(credentialsId: 'ecr:us-east-1:awskey', url: 'https://console.aws.amazon.com/ecr/repositories/test-repository/?region=us-east-1')        }    
+		 withDockerRegistry(credentialsId: 'ecr:us-east-1:awskey', url: 'https://console.aws.amazon.com/ecr/repositories?region=us-east-1')     
+	}    
     }
 }
         stage('Build & Push docker image to ECR') {
