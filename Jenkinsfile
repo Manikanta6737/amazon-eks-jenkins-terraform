@@ -3,17 +3,30 @@ pipeline {
     environment {
         AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id')
         AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
+	VERSION = "$(BUILDNUMBER)"
+	PROJECT = 'test-repository'
+	IMAGE = "$PROJECT:$VERSION"
 	ECRURL = "https://070999721344.dkr.ecr.us-east-1.amazonaws.com/test-repository"
 	ECRCRED = "ecr:us-east-1:awskey"
     }
      stages {
-    	  stage('Build & Push docker image to ECR') {
-            steps {
-                sh 'docker build -t test .'
-		sh 'docker tag test:latest 070999721344.dkr.ecr.us-east-1.amazonaws.com/test-repository:latest'
-		sh 'docker.with registry(ECRURL, ECRCRED)'
-		sh 'docker push 070999721344.dkr.ecr.us-east-1.amazonaws.com/test-repository:latest'
-         }
-      }
-   }   
+	  stage('Image Build'){
+	    steps {
+		script{
+		       docker.build('$IMAGE')
+		    }
+	       }
+	  }
+	     stage('Push image'){
+	    steps {
+		script 
+		    {
+		       docker.withRegistry(ECRURL, ECRCRED)
+			  {
+			     docker.image(IMAGE).push()
+			  }
+		    }
+	    }
+	 }
+     }
 }
