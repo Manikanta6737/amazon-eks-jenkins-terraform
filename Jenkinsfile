@@ -4,7 +4,7 @@ pipeline {
 	stage('login_ecr') {
     	    steps {
        		script {
-            	withDockerRegistry([url: "https://070999721344.dkr.ecr.us-east-1.amazonaws.com/test-repository",credentialsId: "ecr:us-east-1:awskey"])
+            	withDockerRegistry([url: "https://070999721344.dkr.ecr.us-east-1.amazonaws.com",credentialsId: "ecr:us-east-1:awskey"])
         }    
     }
 }
