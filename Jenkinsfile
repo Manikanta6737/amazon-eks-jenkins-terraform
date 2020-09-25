@@ -3,6 +3,8 @@ pipeline {
     environment {
         AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id')
         AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
+	ECRURL = "https://070999721344.dkr.ecr.us-east-1.amazonaws.com/test-repository"
+	ECRCRED = "ecr:us-east-1:awskey"
     }
      stages {
     	  stage('Build & Push docker image to ECR') {
