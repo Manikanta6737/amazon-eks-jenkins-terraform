@@ -8,11 +8,23 @@ pipeline {
 	ECRCRED = "ecr:us-east-1:awskey"
     }
      stages {
-	  stage('Build Application') { 
-            steps {
-                echo '=== Building  Application ==='
-                sh 'mvn -B -DskipTests clean package' 
-            }
-        }
+	  stage('Image Build'){
+	    steps {
+		script{
+		       docker.build('$IMAGE')
+		    }
+	       }
+	  }
+	     stage('Push image'){
+	    steps {
+		script 
+		    {
+		       docker.withRegistry(ECRURL, ECRCRED)
+			  {
+			     docker.image(IMAGE).push()
+			  }
+		    }
+	    }
+	 }
      }
 }
